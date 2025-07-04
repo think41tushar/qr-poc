@@ -20,6 +20,7 @@ def create_shop(shop: ShopCreate, session: Session = Depends(get_session)):
     session.refresh(db_shop)
     return db_shop
 
+
 # Get shop info (+medicines)
 @app.get("/shops/{shop_id}", response_model=ShopMedicinesOut)
 def get_shop(shop_id: UUID, session: Session = Depends(get_session)):
@@ -30,6 +31,7 @@ def get_shop(shop_id: UUID, session: Session = Depends(get_session)):
         select(Medicine).where(Medicine.shop_id == shop_id)
     ).all()
     return {"shop": shop, "medicines": medicines}
+
 
 # Add medicine to shop
 @app.post("/shops/{shop_id}/medicines", response_model=MedicineRead)
